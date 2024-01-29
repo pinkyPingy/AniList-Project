@@ -56,7 +56,7 @@ export default function AddItemModal() {
             <label htmlFor={"anime" + data.show.id} className="inline-flex items-center justify-between w-full p-3 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-400 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-[#4F5D75] dark:hover:bg-gray-500">
                 <div className="block">
                     <div className="w-full text-lg font-semibold">{data.show.name}</div>
-                    <div className="w-full text-gray-500 dark:text-gray-400">{data.show.genres.length <= 1 ? "Genre: " : "Genres: "}{data.show.genres.join(", ")}</div>
+                    <div className="w-full text-gray-400">{data.show.genres.length <= 1 ? "Genre: " : "Genres: "}{data.show.genres.join(", ")}</div>
                 </div>
                 {/* <svg className="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" /></svg> */}
             </label>
@@ -67,7 +67,7 @@ export default function AddItemModal() {
         <>
             <button
                 onClick={toggleModal}
-                className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="block text-white bg-[#EF8354] hover:bg-[#2D3142] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 type="button"
             >
                 Add your AniList
@@ -158,7 +158,7 @@ export default function AddItemModal() {
                             </button>
                             <button
                                 onClick={toggleModal}
-                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                className="text-white bg-[#EF8354] hover:bg-[#2D3142] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                                 type="button"
                             >
                                 Add to your AniList
