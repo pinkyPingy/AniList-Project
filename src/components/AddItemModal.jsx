@@ -97,8 +97,11 @@ export default function AddItemModal() {
                         </div>
 
                         {/* Show Selected Item */}
-                        <div className="w-full h-[110px] border border-[#EF8354] rounded-lg">
-                            {selectedItem.show ? <p>{selectedItem.show.name}</p> : ""}
+                        <div className="w-full h-[142px] border border-[#EF8354] rounded-lg flex p-[10px]">
+                            {selectedItem.show ?
+                                (selectedItem.show.image ? <img className="rounded-md" src={selectedItem.show.image.medium} ></img> : <img src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" className="w-[85.42px] h-[120px] rounded-md"></img>)
+
+                                : <p className="text-[#BFC0C0] self-center mx-auto">Search something...</p>}
                         </div>
                         <div>
                             <button
