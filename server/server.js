@@ -16,7 +16,7 @@ mongoose.connect('mongodb+srv://awat:DUJo8XXWsAqnOoS7@anilist1.zol9eib.mongodb.n
 
 // Define Mongoose schema and model
 const itemSchema = new mongoose.Schema({
-    _id: String,
+    itemId: String,
     name: String,
     imgURL: String,
     genres: String,

@@ -5,6 +5,19 @@ import AddItemModal from './components/AddItemModal'
 import axios from 'axios';
 
 function App() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from backend when component mounts
+    axios.get('/api/items')
+      .then(response => {
+        setItems(response.data);
+        console.log(items)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
   return (
     <div className='flex flex-col'>
@@ -14,21 +27,21 @@ function App() {
         </h1>
       </header>
       <div className='flex flex-row'>
+
         <aside className='w-[20%] bg-white flex flex-col'>
           <div className='mx-5 mt-10'>
             <AddItemModal />
           </div>
         </aside>
+
         <main className='w-full min-h-screen bg-slate-100'>
-
-          <div className='m-10'>
+          <div className='mt-10 ml-10'>
+            {/* {items.map(item => ( */}
             <Item />
+            {/* ))} */}
           </div>
-
-
-
-
         </main>
+
       </div>
 
 
