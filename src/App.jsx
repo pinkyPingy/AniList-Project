@@ -4,13 +4,12 @@ import Item from './components/Item'
 import AddItemModal from './components/AddItemModal'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className='flex flex-col'>
-      <header>
-        <h1 className="text-3xl font-bold underline bg-red-400">
-          Hello world!
+      <header className='bg-[#4F5D75]'>
+        <h1 className="text-3xl text-white inline-block ml-5 my-3">
+          AniList-Project
         </h1>
       </header>
       <div className='flex flex-row'>
