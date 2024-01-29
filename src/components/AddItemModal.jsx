@@ -50,6 +50,18 @@ export default function AddItemModal() {
         setSearchTerm(searchTerm)
     }
 
+    const addItem = async () => {
+        try {
+            const response = await axios.post('/api/items', {
+                name: 'New Item',
+                description: 'Description of new item'
+            });
+            setItems([...items, response.data]);
+        } catch (error) {
+            console.error('Error adding item:', error);
+        }
+    };
+
     const itemList = dataList.map(data => (
         <li key={data.show.id} onClick={() => handleItemClick(data)}>
             <input type="radio" id={"anime" + data.show.id} name="anime" value={"anime" + data.show.id} className="hidden peer"></input>
@@ -131,7 +143,7 @@ export default function AddItemModal() {
                                 <div>
                                     <label htmlFor="status" className="block font-medium mb-1 text-sm text-gray-900">Status</label>
                                     <select id="status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-60 p-2">
-                                        <option selected="">Select status</option>
+                                        <option value="">Select status</option>
                                         <option value="In Queue">In Queue</option>
                                         <option value="Current Watching">Current Watching</option>
                                         <option value="Completed">Completed</option>
@@ -152,7 +164,7 @@ export default function AddItemModal() {
                             <button
                                 onClick={toggleModal}
                                 type="button"
-                                class="mr-4 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                className="mr-4 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
                             >
                                 Cancel
                             </button>
