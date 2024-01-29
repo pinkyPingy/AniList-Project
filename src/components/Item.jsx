@@ -9,7 +9,7 @@ export default function Item() {
             <div className="flex flex-col justify-between">
                 <div>
                     <div><span className="text-[#2D3142] font-semibold text-2xl">Solo Leveling</span></div>
-                    <div><span className="text-[#4F5D75] text-sm">Genres: Comedy, Action, Romantic</span></div>
+                    <div><span className="text-[#BFC0C0] text-sm">Genres: Comedy, Action, Romantic</span></div>
                 </div>
                 <div><span className="text-[#4F5D75]">Add note...</span></div>
             </div>

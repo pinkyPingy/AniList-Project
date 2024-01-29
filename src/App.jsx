@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Item from './components/Item'
+import AddItemModal from './components/AddItemModal'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,8 +15,14 @@ function App() {
         <div className='m-10'>
           <Item />
         </div>
+        <div className='m-10'>
+          <AddItemModal />
+        </div>
+
+
 
       </main>
+
     </div>
 
   )
