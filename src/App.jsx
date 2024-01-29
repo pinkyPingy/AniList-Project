@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Item from './components/Item'
 import AddItemModal from './components/AddItemModal'
+import axios from 'axios';
 
 function App() {
 

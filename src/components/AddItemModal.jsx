@@ -18,8 +18,8 @@ export default function AddItemModal() {
     const [detail, setDetail] = useState({
         episode: 0,
         status: "",
-        favorited: false,
-        note: ""
+        note: "",
+        favorited: false
     })
 
     useEffect(() => {
@@ -129,7 +129,7 @@ export default function AddItemModal() {
                                     <input type="number" name="episode" min={0} id="episode" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-16 p-2" defaultValue={0}></input>
                                 </div>
                                 <div>
-                                    <label htmlFor="status" className="block font-medium mb-1 text-sm text-gray-900">Category</label>
+                                    <label htmlFor="status" className="block font-medium mb-1 text-sm text-gray-900">Status</label>
                                     <select id="status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-60 p-2">
                                         <option selected="">Select status</option>
                                         <option value="In Queue">In Queue</option>
