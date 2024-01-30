@@ -48,7 +48,30 @@ app.post('/api/items', async (req, res) => {
         const savedItem = await newItem.save();
         // Return the complete saved item object in the response
         res.json(savedItem);
-        console.log(newItem)
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Backend route to handle PUT request to increment episode by 1
+app.put('/api/items/:id/increment', async (req, res) => {
+    const { id } = req.params;
+    try {
+        // Ensure that id is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid item ID' });
+        }
+
+        const item = await Item.findById(id);
+        if (!item) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+
+        // Increment episode by 1
+        item.episode = parseInt(item.episode) + 1;
+        item.episode = item.episode.toString()
+        const updatedItem = await item.save();
+        res.json(updatedItem);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

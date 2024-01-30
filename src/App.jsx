@@ -19,6 +19,7 @@ function App() {
       });
   }, []);
 
+
   return (
     <div className='flex flex-col'>
       <header className='bg-[#4F5D75]'>
@@ -34,11 +35,11 @@ function App() {
           </div>
         </aside>
 
-        <main className='w-full min-h-screen bg-slate-100'>
+        <main className='w-full h-screen bg-slate-100'>
           <div className='mt-10 ml-10'>
-            {/* {items.map(item => ( */}
-            <Item />
-            {/* ))} */}
+            {items.map(item => (
+              <Item item={item} setItems={setItems} />
+            ))}
           </div>
         </main>
 
