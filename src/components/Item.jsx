@@ -42,6 +42,26 @@ export default function Item({ item, setItems }) {
         }
     };
 
+    let statusColor;
+    switch (selectedStatus) {
+        case "":
+            statusColor = "bg-gray-50"
+            break;
+        case "In Queue":
+            statusColor = "bg-amber-100"
+            break;
+        case "Current Watching":
+            statusColor = "bg-sky-100"
+            break;
+        case "Completed":
+            statusColor = "bg-emerald-100"
+            break;
+        case "Dropped":
+            statusColor = "bg-rose-100"
+            break;
+        default:
+    }
+
     return (
         <div className="w-[760px] h-[142px] bg-white flex flex-row rounded-lg py-[10px] px-[10px] mb-3">
             {/* image */}
@@ -78,7 +98,7 @@ export default function Item({ item, setItems }) {
                 </div>
                 <div className="w-full">
                     <label htmlFor="status" className="block font-medium mb-1 text-sm text-gray-900">Status</label>
-                    <select id="status" name="status" value={selectedStatus} onChange={handleChangeStatus} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2">
+                    <select id="status" name="status" value={selectedStatus} onChange={handleChangeStatus} className={`${statusColor} border border-gray-300 text-[#4F5D75] text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2`}>
                         <option value="">Select status</option>
                         <option value="In Queue">In Queue</option>
                         <option value="Current Watching">Current Watching</option>
@@ -87,6 +107,6 @@ export default function Item({ item, setItems }) {
                     </select>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
