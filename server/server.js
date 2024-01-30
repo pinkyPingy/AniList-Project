@@ -2,7 +2,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 const app = express();
-const port = 5173;
+const port = 3001;
+
+// Middleware to parse JSON bodies
+app.use(express.json());
 
 // Connect to MongoDB using Mongoose
 mongoose.connect('mongodb+srv://awat:DUJo8XXWsAqnOoS7@anilist1.zol9eib.mongodb.net/?retryWrites=true&w=majority')
@@ -29,21 +32,125 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/api/items', async (req, res) => {
     const items = await Item.find();
     res.json(items);
+    // res.send("Hello form the other side!")
 });
 
 // POST route to create a new item
 app.post('/api/items', async (req, res) => {
-    const { itemId, name, imgURL, genres, episode, status, note, favorited } = req.body;
-    const newItem = new Item({ itemId, name, imgURL, genres, episode, status, note, favorited });
+    console.log(req.body)
+    const newItem = new Item(req.body);
     try {
         const savedItem = await newItem.save();
+        // Return the complete saved item object in the response
         res.json(savedItem);
+        console.log(newItem)
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 });
 
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server is listening at http://localhost:${port}`);
 });
+
+// // -----------------------------------------------
+// import { MongoClient, ServerApiVersion } from 'mongodb';
+// const uri = "mongodb+srv://awat:DUJo8XXWsAqnOoS7@anilist1.zol9eib.mongodb.net/?retryWrites=true&w=majority";
+
+// // Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// const client = new MongoClient(uri, {
+//     serverApi: {
+//         version: ServerApiVersion.v1,
+//         strict: true,
+//         deprecationErrors: true,
+//     }
+// });
+
+// async function run() {
+//     try {
+//         // Connect the client to the server	(optional starting in v4.7)
+//         await client.connect();
+//         // Send a ping to confirm a successful connection
+//         await client.db("admin").command({ ping: 1 });
+//         console.log("Pinged your deployment. You successfully connected to MongoDB!");
+//     } finally {
+//         // Ensures that the client will close when you finish/error
+//         await client.close();
+//     }
+// }
+// run().catch(console.dir);
+
+// import express from 'express';
+// import { MongoClient } from 'mongodb';
+
+// const app = express();
+// const port = 5173;
+
+// // MongoDB connection string
+// const uri = "mongodb+srv://awat:DUJo8XXWsAqnOoS7@AniList1.zol9eib.mongodb.net/myList1";
+
+// // Create a new MongoClient instance
+// const client = new MongoClient(uri, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// });
+
+// // Connect to MongoDB using the MongoClient
+// async function connectToMongoDB() {
+//     try {
+//         // Connect to the MongoDB cluster
+//         await client.connect();
+//         console.log("Connected to MongoDB");
+//     } catch (error) {
+//         console.error("Error connecting to MongoDB:", error);
+//     }
+// }
+
+// // Call the connectToMongoDB function to establish the connection
+// connectToMongoDB();
+
+// // Middleware to parse form data
+// app.use(express.urlencoded({ extended: true }));
+
+// // GET route to retrieve all items
+// app.get('/api/items', async (req, res) => {
+//     try {
+//         // Access the myList1 database and the items collection
+//         const database = client.db("myList1");
+//         const collection = database.collection("items");
+
+//         // Find all items in the collection
+//         const items = await collection.find().toArray();
+//         res.json(items);
+//         console.log("Items ja: ", items)
+//     } catch (error) {
+//         console.error("Error retrieving items:", error);
+//         res.status(500).json({ message: "Internal server error" });
+//     }
+// });
+
+// // POST route to create a new item
+// app.post('/api/items', async (req, res) => {
+//     try {
+//         // Access the myList1 database and the items collection
+//         const database = client.db("myList1");
+//         const collection = database.collection("items");
+
+//         // Insert the new item into the collection
+//         const newItem = req.body;
+//         const result = await collection.insertOne(newItem);
+//         res.json(result.ops[0]);
+//     } catch (error) {
+//         console.error("Error creating item:", error);
+//         res.status(500).json({ message: "Internal server error" });
+//     }
+// });
+
+// // Start the server
+// app.listen(port, () => {
+//     console.log(`Server is listening at http://localhost:${port}`);
+// });
+
+

@@ -12,7 +12,7 @@ function App() {
     axios.get('/api/items')
       .then(response => {
         setItems(response.data);
-        console.log(items)
+        console.log("First fetch: ", items)
       })
       .catch(error => {
         console.error('Error fetching data:', error);

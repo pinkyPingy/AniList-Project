@@ -86,6 +86,7 @@ export default function AddItemModal({ setItems }) {
         console.log(dataToAdd)
         try {
             const response = await axios.post('http://localhost:5173/api/items', dataToAdd);
+            console.log("SUCCESS!!!!")
             setItems(prevItems => [...prevItems, response.data]); // Update items state in parent component
         } catch (error) {
             console.error('Error adding item:', error);
