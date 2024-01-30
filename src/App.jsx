@@ -30,7 +30,7 @@ function App() {
 
         <aside className='w-[20%] bg-white flex flex-col'>
           <div className='mx-5 mt-10'>
-            <AddItemModal />
+            <AddItemModal setItems={setItems} />
           </div>
         </aside>
 

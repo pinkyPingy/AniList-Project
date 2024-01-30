@@ -10,7 +10,7 @@ const mockData = [
     { id: 5, title: "One Punch Man", genre: ["History"] },
 ]
 
-export default function AddItemModal() {
+export default function AddItemModal({ setItems }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState({});
     const [searchTerm, setSearchTerm] = useState("")
@@ -38,6 +38,12 @@ export default function AddItemModal() {
             setDataList([]);
             setSearchTerm("");
             setSelectedItem({});
+            setDetail({
+                episode: 0,
+                status: "",
+                note: "",
+                favorited: false
+            })
         }
         setModalOpen(!modalOpen);
     };
@@ -46,20 +52,45 @@ export default function AddItemModal() {
         setSelectedItem(item);
     };
 
+    const handleChange = (evt) => {
+        const changeField = evt.target.name;
+        let newValue = evt.target.value;
+
+        if (changeField === "favorited") {
+            newValue = evt.target.checked
+        }
+        // else if (changeField === "episode") {
+        //     newValue = parseInt(evt.target.value, 10)
+        // }
+
+        setDetail((currData) => ({
+            ...currData,
+            [changeField]: newValue,
+        }))
+
+        // console.log(changeField, newValue)
+    }
+
     const search = (searchTerm) => {
         setSearchTerm(searchTerm)
     }
 
     const addItem = async () => {
+        const dataToAdd = {
+            itemId: selectedItem.show.id,
+            name: selectedItem.show.name,
+            imgURL: selectedItem.show.image ? selectedItem.show.image.medium : "https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg",
+            genres: selectedItem.show.genres.join(", "),
+            ...detail
+        }
+        console.log(dataToAdd)
         try {
-            const response = await axios.post('/api/items', {
-                name: 'New Item',
-                description: 'Description of new item'
-            });
-            setItems([...items, response.data]);
+            const response = await axios.post('http://localhost:5173/api/items', dataToAdd);
+            setItems(prevItems => [...prevItems, response.data]); // Update items state in parent component
         } catch (error) {
             console.error('Error adding item:', error);
         }
+        toggleModal();
     };
 
     const itemList = dataList.map(data => (
@@ -138,11 +169,11 @@ export default function AddItemModal() {
                             <div className="flex flex-row">
                                 <div className="mr-auto">
                                     <label htmlFor="episode" className="block font-medium mb-1 text-sm text-gray-900 mr-2">Episode</label>
-                                    <input type="number" name="episode" min={0} id="episode" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-16 p-2" defaultValue={0}></input>
+                                    <input type="number" name="episode" min={0} value={detail.episode} onChange={handleChange} id="episode" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-16 p-2"></input>
                                 </div>
                                 <div>
                                     <label htmlFor="status" className="block font-medium mb-1 text-sm text-gray-900">Status</label>
-                                    <select id="status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-60 p-2">
+                                    <select id="status" name="status" value={detail.status} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-60 p-2">
                                         <option value="">Select status</option>
                                         <option value="In Queue">In Queue</option>
                                         <option value="Current Watching">Current Watching</option>
@@ -153,10 +184,10 @@ export default function AddItemModal() {
                             </div>
                             <div className="mt-1">
                                 <label htmlFor="note" className="block mb-1 text-sm font-medium text-gray-900">Note</label>
-                                <textarea id="note" rows="1" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Add note..."></textarea>
+                                <textarea id="note" rows="1" name="note" value={detail.note} onChange={handleChange} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Add note..."></textarea>
                             </div>
                             <div className="mt-3 flex items-center">
-                                <input id="favorited" type="checkbox" value="" className="w-5 h-5 border border-gray-300 rounded-lg bg-gray-50 focus:ring-3 focus:ring-red-300"></input>
+                                <input id="favorited" name="favorited" type="checkbox" checked={detail.favorited} onChange={handleChange} className="w-5 h-5 border border-gray-300 rounded-lg bg-gray-50 focus:ring-3 focus:ring-red-300"></input>
                                 <label htmlFor="favorited" className="ml-2 text-sm text-gray-900">Add as Favorited</label>
                             </div>
                         </div>
@@ -169,7 +200,7 @@ export default function AddItemModal() {
                                 Cancel
                             </button>
                             <button
-                                onClick={toggleModal}
+                                onClick={addItem}
                                 className="text-white bg-[#EF8354] hover:bg-[#2D3142] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                                 type="button"
                             >

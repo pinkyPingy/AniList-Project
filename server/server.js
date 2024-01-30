@@ -1,42 +1,46 @@
-// Backend (Node.js with Express.js and Mongoose)
 import express from 'express';
 import mongoose from 'mongoose';
 
-// Set up Express.js server
 const app = express();
-const port = 3001;
-const password = "DUJo8XXWsAqnOoS7";
+const port = 5173;
+
 // Connect to MongoDB using Mongoose
-mongoose.connect('mongodb+srv://awat:DUJo8XXWsAqnOoS7@anilist1.zol9eib.mongodb.net/?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect('mongodb+srv://awat:DUJo8XXWsAqnOoS7@anilist1.zol9eib.mongodb.net/?retryWrites=true&w=majority')
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error(err));
 
 // Define Mongoose schema and model
 const itemSchema = new mongoose.Schema({
-    itemId: String,
+    itemId: Number,
     name: String,
     imgURL: String,
     genres: String,
-    episode: Number,
+    episode: String,
     status: String,
     note: String,
     favorited: Boolean
 });
 const Item = mongoose.model('Item', itemSchema);
 
-// Define routes
+// Middleware to parse form data
+app.use(express.urlencoded({ extended: true }));
+
+// GET route to retrieve all items
 app.get('/api/items', async (req, res) => {
     const items = await Item.find();
     res.json(items);
 });
 
+// POST route to create a new item
 app.post('/api/items', async (req, res) => {
-    const newItem = new Item(req.body);
-    await newItem.save();
-    res.json(newItem);
+    const { itemId, name, imgURL, genres, episode, status, note, favorited } = req.body;
+    const newItem = new Item({ itemId, name, imgURL, genres, episode, status, note, favorited });
+    try {
+        const savedItem = await newItem.save();
+        res.json(savedItem);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 });
 
 // Start the server
