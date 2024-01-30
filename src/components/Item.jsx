@@ -1,7 +1,24 @@
-import { Favorite, AddCircleOutline } from "@mui/icons-material"
+import { AddCircleOutline } from "@mui/icons-material"
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import axios from "axios";
+import { useState } from "react";
 
 export default function Item({ item, setItems }) {
+    const [selectedStatus, setSelectedStatus] = useState(item.status);
+
+    const handleChangeStatus = async (event) => {
+        const newStatus = event.target.value;
+        try {
+            const response = await axios.put(`http://localhost:3001/api/items/${item._id}`, { status: newStatus });
+            const updatedItem = response.data;
+            // Update the state with the updated item
+            setItems(prevItems => prevItems.map(it => it._id === item._id ? updatedItem : it));
+            setSelectedStatus(newStatus);
+        } catch (error) {
+            console.error('Error changing status:', error);
+        }
+    };
 
     const incrementEpisode = async () => {
         try {
@@ -11,6 +28,17 @@ export default function Item({ item, setItems }) {
             setItems(prevItems => prevItems.map(it => it._id === item._id ? updatedItem : it));
         } catch (error) {
             console.error('Error incrementing episode:', error);
+        }
+    };
+
+    const toggleFavorited = async () => {
+        try {
+            const response = await axios.put(`http://localhost:3001/api/items/${item._id}/toggle-favorited`);
+            const updatedItem = response.data;
+            // Update the state with the updated item
+            setItems(prevItems => prevItems.map(it => it._id === item._id ? updatedItem : it));
+        } catch (error) {
+            console.error('Error toggling favorited:', error);
         }
     };
 
@@ -24,7 +52,7 @@ export default function Item({ item, setItems }) {
                     <div><span className="text-[#2D3142] font-semibold text-2xl">{item.name}</span></div>
                     <div><span className="text-[#BFC0C0] text-sm">Genres: {item.genres}</span></div>
                 </div>
-                <div><span className="text-[#4F5D75]">Add note...</span></div>
+                <div><span className="text-[#4F5D75]">{item.note}</span></div>
             </div>
             <div className="ml-auto flex flex-col justify-between">
                 <div className="flex flex-row">
@@ -32,10 +60,31 @@ export default function Item({ item, setItems }) {
                         <div><span className="text-[#4F5D75] text-xl mr-4">Ep. {item.episode}</span></div>
                         <div onClick={incrementEpisode}><AddCircleOutline /></div>
                     </div>
-                    <div><Favorite /></div>
+                    {item.favorited ? (
+                        <FavoriteIcon
+                            edge="start"
+                            onClick={toggleFavorited}
+                            style={{
+                                cursor: 'pointer', color: '#EF8354'
+                            }} // Adjust color as needed
+                        />
+                    ) : (
+                        <FavoriteBorderIcon
+                            edge="start"
+                            onClick={toggleFavorited}
+                            style={{ cursor: 'pointer' }}
+                        />
+                    )}
                 </div>
-                <div>
-                    <select name="" id="" className="w-full bg-[#EF8354] rounded-md"></select>
+                <div className="w-full">
+                    <label htmlFor="status" className="block font-medium mb-1 text-sm text-gray-900">Status</label>
+                    <select id="status" name="status" value={selectedStatus} onChange={handleChangeStatus} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2">
+                        <option value="">Select status</option>
+                        <option value="In Queue">In Queue</option>
+                        <option value="Current Watching">Current Watching</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Dropped">Dropped</option>
+                    </select>
                 </div>
             </div>
         </div>

@@ -77,6 +77,45 @@ app.put('/api/items/:id/increment', async (req, res) => {
     }
 });
 
+// Backend code (Node.js with Express)
+app.put('/api/items/:id/toggle-favorited', async (req, res) => {
+    const { id } = req.params;
+    try {
+        // Find the item by ID
+        const item = await Item.findById(id);
+        if (!item) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+        // Toggle the 'favorited' boolean
+        item.favorited = !item.favorited;
+        // Save the updated item
+        const updatedItem = await item.save();
+        res.json(updatedItem);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Backend code (Node.js with Express)
+app.put('/api/items/:id', async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    try {
+        // Find the item by ID
+        const item = await Item.findById(id);
+        if (!item) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+        // Update the 'status' string
+        item.status = status;
+        // Save the updated item
+        const updatedItem = await item.save();
+        res.json(updatedItem);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
 
 // Start the server
 app.listen(port, () => {
