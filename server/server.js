@@ -1,9 +1,14 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 const app = express();
 const port = 3001;
 
+app.use(cors({
+    origin: 'http://localhost:5173' // Replace with your frontend URL
+}));
+// Enable CORS for all routes
 // Middleware to parse JSON bodies
 app.use(express.json());
 

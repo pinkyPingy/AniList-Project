@@ -29,7 +29,7 @@ export default function AddItemModal({ setItems }) {
     async function fetchAnime() {
         const config = { params: { q: searchTerm } }
         const res = await axios.get(`http://api.tvmaze.com/search/shows`, config);
-        console.log(res.data)
+        // console.log(res.data)
         setDataList(res.data)
     }
 
@@ -85,7 +85,7 @@ export default function AddItemModal({ setItems }) {
         }
         console.log(dataToAdd)
         try {
-            const response = await axios.post('http://localhost:5173/api/items', dataToAdd);
+            const response = await axios.post('http://localhost:3001/api/items', dataToAdd);
             console.log("SUCCESS!!!!")
             setItems(prevItems => [...prevItems, response.data]); // Update items state in parent component
         } catch (error) {

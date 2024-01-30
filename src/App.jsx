@@ -9,10 +9,10 @@ function App() {
 
   useEffect(() => {
     // Fetch data from backend when component mounts
-    axios.get('/api/items')
+    axios.get('http://localhost:3001/api/items')
       .then(response => {
         setItems(response.data);
-        console.log("First fetch: ", items)
+        console.log("First fetch: ", response.data)
       })
       .catch(error => {
         console.error('Error fetching data:', error);
