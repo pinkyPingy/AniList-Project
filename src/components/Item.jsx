@@ -89,7 +89,7 @@ export default function Item({ item, setItems }) {
         <div className="lg:w-[760px] md:h-[142px] bg-white flex flex-col md:flex-row rounded-lg py-[10px] px-[10px] mb-3 shadow-md">
             {/* image */}
             <div className="flex flex-row mb-3 md:mb-0">
-                <img src={item.imgURL} className="rounded-md mr-[13px] md:mr-[22px] w-[86.85px]" />
+                <img src={item.imgURL} className="rounded-md mr-[13px] md:mr-[22px] w-[86.85px] h-[121.99px]" />
 
                 <div className="flex flex-col justify-between">
                     <div>
