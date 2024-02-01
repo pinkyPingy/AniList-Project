@@ -35,7 +35,7 @@ function App() {
           </div>
         </aside>
 
-        <main className='w-full h-screen bg-slate-100'>
+        <main className='w-full min-h-full bg-slate-100 pb-8'>
           <div className='mt-10 ml-10'>
             {items.map(item => (
               <Item item={item} setItems={setItems} />
