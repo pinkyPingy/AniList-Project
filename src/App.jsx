@@ -27,14 +27,14 @@ function App() {
 
   return (
     <div className='flex flex-col'>
-      <header className='bg-[#4F5D75] fixed w-full'>
+      <header className='bg-[#4F5D75] fixed md:z-30 w-full flex justify-center md:justify-start'>
         <button
-          className="md:hidden top-0 left-0 my-2 mx-3 text-4xl z-40 text-white"
+          className="md:hidden fixed top-0 left-0 my-2 mx-3 text-4xl z-40 text-white"
           onClick={toggleSidebar}
         >
           ☰
         </button>
-        <h1 className="text-3xl text-white inline-block ml-16 md:ml-5 my-3">
+        <h1 className="text-3xl text-white inline-block md:ml-5 my-3">
           AniList-Project
         </h1>
       </header>
