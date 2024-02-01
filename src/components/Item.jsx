@@ -1,6 +1,8 @@
 import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material"
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import CustomDeleteButton from "./CustomDeleteButton";
 import axios from "axios";
 import { useState } from "react";
 
@@ -17,6 +19,16 @@ export default function Item({ item, setItems }) {
             setSelectedStatus(newStatus);
         } catch (error) {
             console.error('Error changing status:', error);
+        }
+    };
+
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`http://localhost:3001/api/items/${item._id}`);
+            // Update frontend state to remove the deleted item
+            setItems(prevItems => prevItems.filter(it => it._id !== item._id));
+        } catch (error) {
+            console.error('Error deleting item:', error);
         }
     };
 
@@ -85,9 +97,10 @@ export default function Item({ item, setItems }) {
                 </div>
                 <div><span className="text-[#4F5D75]">{item.note}</span></div>
             </div>
-            <div className="ml-auto flex flex-col justify-between">
+            <div className="ml-auto flex flex-col justify-between items-center">
                 <div className="flex flex-row">
-                    <div className="flex flex-row mr-6">
+                    <CustomDeleteButton handleDelete={handleDelete} />
+                    <div className="flex flex-row mx-3">
                         <div className={item.episode == 0 ? "text-[#BFC0C0]" : "text-[#4F5D75]"} onClick={decrementEpisode}><RemoveCircleOutline /></div>
                         <div><span className="text-[#2D3142] text-xl mx-2">Ep. {item.episode}</span></div>
                         <div className="text-[#4F5D75]" onClick={incrementEpisode}><AddCircleOutline /></div>
@@ -97,14 +110,16 @@ export default function Item({ item, setItems }) {
                             edge="start"
                             onClick={toggleFavorited}
                             style={{
-                                cursor: 'pointer', color: '#EF8354'
+                                cursor: 'pointer', color: '#EF8354', marginTop: '1px'
                             }} // Adjust color as needed
                         />
                     ) : (
                         <FavoriteBorderIcon
                             edge="start"
                             onClick={toggleFavorited}
-                            style={{ cursor: 'pointer' }}
+                            style={{
+                                cursor: 'pointer', marginTop: '1px'
+                            }}
                         />
                     )}
                 </div>

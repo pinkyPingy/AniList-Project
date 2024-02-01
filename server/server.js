@@ -143,6 +143,18 @@ app.put('/api/items/:id', async (req, res) => {
     }
 });
 
+// Backend route to handle DELETE requests
+app.delete('/api/items/:id', async (req, res) => {
+    const itemId = req.params.id;
+    try {
+        // Find the item by ID and delete it from the database
+        await Item.findByIdAndDelete(itemId);
+        res.status(200).json({ message: 'Item deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting item' });
+    }
+});
+
 
 // Start the server
 app.listen(port, () => {
