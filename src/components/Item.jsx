@@ -86,18 +86,21 @@ export default function Item({ item, setItems }) {
     }
 
     return (
-        <div className="w-[760px] h-[142px] bg-white flex flex-row rounded-lg py-[10px] px-[10px] mb-3 shadow-md">
+        <div className="md:w-[760px] md:h-[142px] bg-white flex flex-col md:flex-row rounded-lg py-[10px] px-[10px] mb-3 shadow-md">
             {/* image */}
-            <img src={item.imgURL} className="rounded-md mr-[22px] w-[86.85px]" />
+            <div className="flex flex-row mb-3 md:mb-0">
+                <img src={item.imgURL} className="rounded-md mr-[10px] md:mr-[22px] w-[86.85px]" />
 
-            <div className="flex flex-col justify-between">
-                <div>
-                    <div><span className="text-[#2D3142] font-semibold text-2xl">{item.name}</span></div>
-                    <div><span className="text-[#BFC0C0] text-sm">Genres: {item.genres}</span></div>
+                <div className="flex flex-col justify-between">
+                    <div>
+                        <div><span className="text-[#2D3142] font-semibold text-xl md:text-2xl">{item.name}</span></div>
+                        <div><span className="text-[#BFC0C0] text-xs">Genres: {item.genres}</span></div>
+                    </div>
+                    <div><span className="text-[#4F5D75]">{item.note}</span></div>
                 </div>
-                <div><span className="text-[#4F5D75]">{item.note}</span></div>
             </div>
-            <div className="ml-auto flex flex-col justify-between items-center">
+
+            <div className="md:ml-auto flex flex-col justify-between items-center">
                 <div className="flex flex-row">
                     <CustomDeleteButton handleDelete={handleDelete} />
                     <div className="flex flex-row mx-3">

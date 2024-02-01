@@ -36,9 +36,9 @@ function App() {
         </aside>
 
         <main className='w-full min-h-full bg-slate-100 pb-8'>
-          <div className='mt-10 ml-10'>
+          <div className='mt-10 mx-5 md:mx-10'>
             {items.map(item => (
-              <Item item={item} setItems={setItems} />
+              <Item key={item._id} item={item} setItems={setItems} />
             ))}
           </div>
         </main>
