@@ -77,6 +77,33 @@ app.put('/api/items/:id/increment', async (req, res) => {
     }
 });
 
+// Backend route to handle PUT request to decrement episode by 1
+app.put('/api/items/:id/decrement', async (req, res) => {
+    const { id } = req.params;
+    try {
+        // Ensure that id is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid item ID' });
+        }
+
+        const item = await Item.findById(id);
+        if (!item) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+
+        // decrement episode by 1
+        if (item.episode > 0) {
+            item.episode = parseInt(item.episode) - 1;
+            item.episode = item.episode.toString()
+            const updatedItem = await item.save();
+            res.json(updatedItem);
+        }
+
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
 // Backend code (Node.js with Express)
 app.put('/api/items/:id/toggle-favorited', async (req, res) => {
     const { id } = req.params;
