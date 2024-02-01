@@ -27,9 +27,9 @@ function App() {
 
   return (
     <div className='flex flex-col'>
-      <header className='bg-[#4F5D75] z-30 w-full'>
+      <header className='bg-[#4F5D75] fixed w-full'>
         <button
-          className="md:hidden fixed top-0 left-0 my-2 mx-3 text-4xl z-40 text-[#EF8354]"
+          className="md:hidden top-0 left-0 my-2 mx-3 text-4xl z-40 text-white"
           onClick={toggleSidebar}
         >
           ☰
@@ -47,13 +47,23 @@ function App() {
       <div className='flex flex-row'>
 
         <aside className={`w-[40%] md:w-[20%] z-20 h-full ${isSidebarOpen ? 'fixed' : 'hidden'} md:block bg-white flex flex-col`}>
-          <div className='mx-5 mt-10'>
+          <button
+            type="button"
+            onClick={toggleSidebar}
+            className="text-[#BFC0C0] bg-transparent hover:text-[#4F5D75] rounded-lg ml-auto mr-5 mt-5"
+          >
+            <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+            <span className="sr-only">Close modal</span>
+          </button>
+          <div className='mx-5 mt-11'>
             <AddItemModal setItems={setItems} />
           </div>
         </aside>
 
         <main className='w-full min-h-full bg-slate-100 pb-8'>
-          <div className='mt-10 mx-5 md:mx-10'>
+          <div className='mt-20 mx-5 md:mx-10'>
             {items.map(item => (
               <Item key={item._id} item={item} setItems={setItems} />
             ))}
