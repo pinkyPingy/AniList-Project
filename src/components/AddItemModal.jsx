@@ -122,7 +122,7 @@ export default function AddItemModal({ setItems }) {
                     id="select-modal"
                     tabIndex="-1"
                     aria-hidden="true"
-                    className="w-[540px] h-[799px] bg-white rounded-lg shadow-md shadow-[#EF8354] overflow-y-auto overflow-x-hidden fixed top-[5%] right-0 left-[35%] z-50 flex-col justify-center items-center"
+                    className="w-11/12 md:w-[540px] md:h-[799px] bg-white rounded-lg shadow md:shadow-md shadow-[#EF8354] overflow-y-auto overflow-x-hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 flex-col justify-center items-center"
                 >
                     <div className="relative p-4 w-full max-h-full">
                         {/* <!-- Modal header --> */}
@@ -145,10 +145,12 @@ export default function AddItemModal({ setItems }) {
                         <AddItemSearchForm search={search} />
 
                         {/* <!-- Item List--> */}
-                        <div className="h-[270px] overflow-y-auto mb-3">
-                            <ul className="space-y-1">
-                                {itemList}
-                            </ul>
+                        <div className="h-[120px] md:h-[270px] overflow-y-auto mb-3 border rounded-lg flex">
+                            {dataList.length > 0 ?
+                                <ul className="space-y-1 w-full">
+                                    {itemList}
+                                </ul> : <p className="text-[#BFC0C0] self-center mx-auto">Search results go here!</p>}
+
                         </div>
 
                         {/* Show Selected Item */}
@@ -157,7 +159,7 @@ export default function AddItemModal({ setItems }) {
                                 <>
                                     {selectedItem.show.image ? <img className="rounded-md mr-[22px]" src={selectedItem.show.image.medium} ></img> : <img src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" className="w-[85.42px] h-[120px] rounded-md mr-[22px]"></img>}
                                     < div className="flex flex-col">
-                                        <div><span className="text-[#2D3142] font-semibold text-2xl">{selectedItem.show.name}</span></div>
+                                        <div><span className="text-[#2D3142] font-semibold text-xl md:text-2xl">{selectedItem.show.name}</span></div>
                                         <div><span className="text-[#BFC0C0] text-sm">{selectedItem.show.genres.length <= 1 ? "Genre: " : "Genres: "}{selectedItem.show.genres.join(", ")}</span></div>
                                         {/* <div><span className="text-[#4F5D75] text-sm">{selectedItem.show.summary}</span></div> */}
                                     </div>
