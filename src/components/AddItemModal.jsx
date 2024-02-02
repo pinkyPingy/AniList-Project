@@ -122,7 +122,7 @@ export default function AddItemModal({ setItems }) {
                     id="select-modal"
                     tabIndex="-1"
                     aria-hidden="true"
-                    className="w-11/12 md:w-[540px] md:h-[799px] bg-white rounded-lg shadow md:shadow-md shadow-[#EF8354] overflow-y-auto overflow-x-hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 flex-col justify-center items-center"
+                    className="w-11/12 md:w-[540px] md:h-5/6 md:max-h-[799px] bg-white rounded-lg shadow md:shadow-md shadow-[#EF8354] overflow-y-auto overflow-x-hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 flex-col justify-center items-center"
                 >
                     <div className="relative p-4 w-full max-h-full">
                         {/* <!-- Modal header --> */}
